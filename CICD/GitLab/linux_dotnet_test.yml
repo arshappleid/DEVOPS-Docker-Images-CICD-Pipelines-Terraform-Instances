@@ -1,0 +1,6 @@
+run_tests:
+    image: destination_to_the_docker_image_from_dockerwebsite # needs to have dotnet installed , and working directory needs to be set
+    before_script: # commands that need to be run before the main script file.
+        - dotnet restore # Install all the packages.
+    script: ## All the commands will be run on the server
+        - dotnet test       

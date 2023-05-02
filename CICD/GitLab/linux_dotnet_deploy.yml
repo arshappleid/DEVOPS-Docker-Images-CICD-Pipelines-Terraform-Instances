@@ -1,0 +1,12 @@
+deploy_prod:
+    image: destination_to_the_docker_image_from_dockerwebsite # needs to have dotnet installed , and working directory needs to be set
+    before_script: # commands that need to be run before the main script file.
+        - dotnet restore # Install all the packages.
+        - dotnet build --configuration Release
+    script: ## All the commands will be run on the server
+        # Publish the application
+        - dotnet publish --configuration Release --output /app
+        # Start the application
+        - cd /app
+        # Run the app and pass the environment variables.
+        - dotnet run --environment $ENVIRONMENT --urls "http://0.0.0.0:5000"

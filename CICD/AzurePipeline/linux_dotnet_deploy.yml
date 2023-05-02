@@ -1,0 +1,62 @@
+trigger:
+    ## Which branch should trigger this pipeline
+    - main
+
+pool:
+    ## Which vmImage should be used to run the piepline
+    vmImage: 'ubuntu-latest'
+    
+variables:
+    ## Declare environmnt variables.
+    buildConfiguration: 'Release'
+
+steps:
+    - task: UseDotNet@2
+      inputs:
+          packageType: 'sdk'
+          version: '5.x'
+
+    - task: DotNetCoreCLI@2
+        displayName: 'dotnet restore'
+        inputs:
+            command: 'restore'
+            projects: '**/*.csproj'
+
+    - task: DotNetCoreCLI@2
+        displayName: 'dotnet build'
+        inputs:
+            projects: '**/*.csproj'
+            arguments: '--configuration $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+        displayName: 'dotnet publish'
+        inputs:
+          command: 'publish'
+          projects: '**/*.csproj'
+          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+          zipAfterPublish: true
+
+    - task: CopyFiles@2
+      displayName: 'Copy files to: $(Build.ArtifactStagingDirectory)'
+      inputs:
+          SourceFolder: '$(System.DefaultWorkingDirectory)/$(BuildConfiguration)/publish'
+          Contents: '**'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+    
+    - task: AzureWebApp@1
+      displayName: 'Azure Web App Deploy: <app-name>'
+      inputs:
+          azureSubscription: '<subscription-name>'
+          appName: '<app-name>'
+          package: '$(System.ArtifactsDirectory)/drop/*.zip'
+          deploymentMethod: 'auto'
+          slotName: 'production'
+          enableCustomDeployment: true
+          additionalArguments: '-webConfigParameters -Production'
+    
