@@ -14,7 +14,7 @@ COPY package*.json ./
 # into the working_directory copy package.json file
 # also done individually for efficiency
 RUN npm install --legacy-peer-deps
-RUN npm npm i -g @angular/cli@${ANGULAR_CLI_VERSION}
+RUN npm i -g @angular/cli@${ANGULAR_CLI_VERSION}
 
 # Once all the packages have been successfully installed , import rest of the files into the working directory
 COPY . .

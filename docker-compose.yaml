@@ -1,0 +1,53 @@
+version : "3.9"
+
+services:
+    frontend:
+        build: ./path/to/dockerfile/directory
+        image: frontend_1
+        ports:
+            - "8080:80" ## map local 8080 to containor port 80
+        restart: always
+        depends_on:     ## make these containors first
+            - backend
+        environment:
+            ENVIRONMENT_VAR_1=value
+        networks:
+            subnet1:
+                ipv4_address: 192.168.92.1
+        
+    backend:
+        build: ./path/to/dockerfile/directory
+        image: backend_1
+        ports:
+            - "4000:90" ## map local 4000 to containor port 90
+        restart: always
+        depends_on:
+            - database
+        environment:
+            ENVIRONMENT_VAR_1=value
+        networks:
+            subnet1:
+                ipv4_address: 192.168.92.2
+                
+
+    database:
+        build: ./path/to/dockerfile/directory
+        image: database_1
+        ports:
+            - "8080:80" ## Can access the database locally at localhost:8080 . 
+        volumes:
+            - ./localhost/directory:/path/inside/containor
+        restart: always
+        environment:
+            ENVIRONMENT_VAR_1=value
+        networks:
+            subnet1:
+                ipv4_address: 192.168.92.3 # other containors inside the network will be able to reach the database at this ipv4_address
+
+
+networks:
+    subnet1:
+        ipam:
+            driver: default
+            config:
+                - subnet : "192.168.92.0/24" ## subnet has 24 open spots
