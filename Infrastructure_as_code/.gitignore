@@ -1,5 +1,8 @@
 ## Terraform files to ignore
 *.backup
 *.tfstate
+*.tfstate.backup
+### Terraform folder
 **/.terraform/*
-**/.terraform.*
+### In prod environments we will also commit the lock file , to ensure everyone uses the same provider dependency , but here we are not.
+**/.terraform.* 
