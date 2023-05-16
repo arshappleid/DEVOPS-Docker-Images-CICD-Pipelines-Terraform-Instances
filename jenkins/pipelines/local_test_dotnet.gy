@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Check out code from local repository
+                    checkout([$class: 'GitSCM', branches: [[name: '*/dev']], 
+                    userRemoteConfigs: [[url: 'file:///path/to/project1']]])  ## update this
+                }
+            }
+        }
+
+        stage('Restore') {
+            steps {
+                script {
+                    // Restore dependencies and tools for the project
+                    sh 'dotnet restore'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Build the project and its dependencies
+                    sh 'dotnet build --configuration Release --no-restore'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Run unit tests using dotnet test
+                    sh 'dotnet test --no-restore --verbosity normal'
+                }
+            }
+        }
+    }
+}
