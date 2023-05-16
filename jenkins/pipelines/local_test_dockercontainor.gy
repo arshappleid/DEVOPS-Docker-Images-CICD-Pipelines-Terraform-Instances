@@ -1,0 +1,34 @@
+pipeline {
+    agent {
+        docker {
+            image 'your-docker-image:tag'
+            args '-v /path/to/project:/app'
+        }
+    }
+    
+    stages {
+        ## All these commands will be run in the above project folder, and environment OS needs to match the commands.
+        ## dotnet needs to be installed locally , since this will be running locally.
+        ## Since the pipeline is expected to run on linux servers, we will use ubuntu commands.
+        ## make sure you are able to run these commands on your local terminal section.
+        stage('Build') {
+            steps {
+                sh 'dotnet restore'            
+                sh 'dotnet build'       
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh 'dotnet test'
+            }
+        }
+        
+        stage('Finished'){
+            steps{
+               echo "Pipeline Finished"
+               echo "Build No : ${BUILD_ID}"
+           }
+        }
+    }
+}

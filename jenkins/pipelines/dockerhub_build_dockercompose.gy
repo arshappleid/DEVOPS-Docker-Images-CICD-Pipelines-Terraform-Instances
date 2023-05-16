@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Pull Image from DockerHub') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredentials') {
+                        def dockerImage = docker.image('your_dockerhub_username/your_image_name:your_tag')
+                        dockerImage.pull()
+                    }
+                    
+                    echo 'Pulling Image from DockerHub..'
+                }
+            }
+        }
+        stage('Build Docker Image with Docker Compose') {
+            steps {
+                script {
+                    // Assuming you have a docker-compose.yml file in the root directory of your project
+                    sh 'docker-compose build'
+                    // Assuming the docker compose command automatically also builds the project
+                    echo 'Building Docker containor from image'
+                }
+            }
+        }
+
+        stage('Finished'){
+            steps{
+               echo "Pipeline Finished"
+               echo "Build No : ${BUILD_ID}"
+           }
+        }
+    }
+}
