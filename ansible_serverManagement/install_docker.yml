@@ -1,0 +1,65 @@
+---
+- name: Install Docker on Ubuntu
+  hosts: your_server
+  become: yes
+
+  tasks:
+      ## sudo apt-get update
+      - name: Update apt cache
+        apt:
+            update_cache: yes
+        become: yes
+    ## sudo apt-get 
+    - name: Install required packages
+      apt:
+          name:
+            - apt-transport-https
+            - ca-certificates
+            - curl
+            - gnupg
+            - lsb-release
+          state: present
+      become: yes
+      
+      ## Add dockers official GPG key
+    - name: Add Docker GPG key
+      apt_key:
+          url: https://download.docker.com/linux/ubuntu/gpg
+          state: present
+      become: yes
+        
+      ## Setup the repository
+    - name: Add Docker repository
+      apt_repository:
+          repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+          state: present
+      become: yes
+        
+      ## update apt-package index
+    - name: Update apt cache
+      apt:
+          update_cache: yes
+      become: yes
+    ## install docker engine
+    - name: Install Docker CE
+      apt:
+          name: docker-ce
+          state: present
+      become: yes
+      vars:
+        VERSION_STRING: 20.10.7 # Specify the version of docker here, else remove to install latest one.
+    
+      ## need to run this so the user can interact with docker dameon without require sudo priveleges.
+    - name: Add current user to docker group
+      user:
+          name: "{{ ansible_user }}"
+          groups: docker
+          append: yes
+      become: yes
+
+    - name: Start Docker service
+      service:
+          name: docker
+          state: started
+          enabled: yes  # Set to no and remove state , to turn off docker service.
+      become: yes

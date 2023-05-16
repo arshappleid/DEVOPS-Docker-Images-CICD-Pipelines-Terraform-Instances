@@ -1,0 +1,48 @@
+## Required modules : ansible.posix.firewall
+## Allows SSH, HTTPS, TCP connection on default ports.
+## Add or delete tasks , to add  firewall rules.
+## To turn off / disableansible.cfg access , change the state variable to disabled.
+## To run the playbook execute : ``` ansible-playbook -i your_inventory_file firewall.yml ```
+---
+- name: Configure firewall rules
+  hosts: your_target_host
+  become: true   # Execute with sudo priveleges
+  tasks:
+      - name: Allow SSH (port 22)
+        firewalld:
+            zone: public
+            service: ssh
+            permanent: yes
+            immediate: yes
+            state: enabled
+
+    - name: Allow HTTPS (port 443)
+      firewalld:
+          zone: public
+          port: 443/tcp
+          permanent: yes
+          immediate: yes
+          state: enabled
+
+    - name: Allow TCP connections on default ports
+      firewalld:
+          zone: public
+          port: "{{ item }}/tcp"
+          permanent: yes
+          immediate: yes
+          state: enabled
+      loop:
+        - 80  # HTTP , and TCP
+        - 443 # HTTPS , and TCP
+        - 25  # SMTP , and TCP
+        - 110 # POP3 , and TCP
+        # Add more ports as needed
+
+    - name: Allow any connection from IP address
+      firewalld:
+          zone: public
+          source: 192.192.192.1/32  # since we did not mention any protocol, all types of connections will be allowed.
+          permanent: yes
+          immediate: yes
+          state: enabled
+
