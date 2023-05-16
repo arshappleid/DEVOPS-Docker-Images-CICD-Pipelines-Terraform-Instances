@@ -1,12 +1,10 @@
-# Docker_Images
-An Open Source Repository , for free to use Docker images for projects.
+# DevOps Code Base
+A Dev Ops code base to support developers , through every stage of Software Development Life Cycle :
 
-### Resources Included
-1. Docker Images : Some useful docker images , for you to customize and adapt to your own project.
-    - dotnet containors
-    - linux servers
-    - node containors
-        - angular
-        - react 
-2. CICD : Some configurations for CICD pipelines , for you to test / build / deploy code.
-3. Terraform_Infrastructure : Some source code to manage AWS resources using terraform.
+3. Creation of Resources using Terrafrom.
+3. Configuration of Resources through Ansible.
+3. Creation and Deployment of environment through Docker , and docker compose for multi containor applications.
+3. Application testing and update through CICD Jenkins platform.
+3. Security best practices for servers.
+3. Performance Tuning and Scaling for servers.
+3. Disaster Recovery Strategies for servers.
