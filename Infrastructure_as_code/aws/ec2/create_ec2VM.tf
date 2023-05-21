@@ -7,7 +7,7 @@ provider "aws" {
 resource "aws_instance" "server_1" {
   ami           = "ami-0c55b159cbfafe1f0" # Ubuntu 18.04 LTS
   instance_type = "t2.micro"
-  key_name      = "your_keypair_name" # Change to your key pair name
+
 
   # Networking configuration
   vpc_security_group_ids = [aws_security_group.server_1_sg.id]
@@ -54,8 +54,8 @@ resource "aws_security_group" "server_1_sg" {
 # Subnet resource to launch the EC2 instance in
 resource "aws_subnet" "server_1_subnet" {
 # make sure this information , matches with the subnet you are trying to launch the ec2 instance in.
-  cidr_block = "172.31.0.0/16" # Change to your desired subnet CIDR block
-  vpc_id = "your_vpc_id"
+  cidr_block = "10.0.0.0/16" # Change to your desired subnet CIDR block
+  vpc_id = "vpc-0f81cfaf22b803b53"
 }
 
 # Output the public IP address of the instance
