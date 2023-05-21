@@ -1,0 +1,9 @@
+version : "3.9"
+
+services:
+    dotnet_api:
+        build: ./
+        image: dotnet_api
+        ports:
+            - "5000:5000" ## map local 8080 to containor port 80
+        restart: always
