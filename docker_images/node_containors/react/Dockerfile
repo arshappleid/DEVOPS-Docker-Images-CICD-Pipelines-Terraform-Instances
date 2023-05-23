@@ -11,5 +11,5 @@ RUN npm install --legacy-peer-deps
 COPY . .
 # Expose port
 EXPOSE ${PORT}
-# Start the application
+# Start the application , on reacts in built server
 CMD ["npm", "start"]
