@@ -1,11 +1,11 @@
 ---
 - name: Install Docker on Ubuntu
   hosts: your_server
-  become: yes
+  become: yes   # if yes , run with sudo priveleges
 
   tasks:
       ## sudo apt-get update
-      - name: Update apt cache
+     - name: Update apt cache
         apt:
             update_cache: yes
         become: yes

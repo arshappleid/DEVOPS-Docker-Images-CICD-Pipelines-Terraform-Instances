@@ -25,7 +25,7 @@ EXPOSE ${PORT}
 # For development
 CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4000"]
 # For production
-# CMD["ng","build","--prod"]
+# CMD ["ng","build","--prod"]
 
 
 # Build the image using : docker build -t angular_AppName .

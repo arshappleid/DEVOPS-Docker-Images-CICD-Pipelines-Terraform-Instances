@@ -1,6 +1,7 @@
 ### Generating self signed SSL certificate , for your docker images.
-1. Make a directory certificates in the project files called "certificates" then navigate into the repo . Using ``` mkdir certificates ; cd certificates ; ``` 
-2. Generate the certificate using : ```openssl x509 -req -in cert.csr -signkey private.key -out cert.pem```
+1. Make a directory certificates in the project files called "certificates" then navigate into the repo . Using ``` mkdir certificates ; cd certificates ; ```
+2. Generate private key : ``` openssl genpkey -algorithm RSA -out csr.pem -aes256```
+2. Generate the certificate using : ```openssl x509 -req -in csr.pem -signkey private.key -out cert.pem```
 3. Convert to pfx format using : ```openssl pkcs12 -export -out cert.pfx -inkey private.key -in cert.pem```
 
 ### Configure microservice to use the certifacte.

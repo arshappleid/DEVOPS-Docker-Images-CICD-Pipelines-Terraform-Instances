@@ -16,6 +16,8 @@ RUN apt-get update && \
 RUN groupadd -r ${LINUX_USER} && \
     useradd -r -g ${LINUX_USER} ${LINUX_USER} && \
     usermod -aG sudo ${LINUX_USER}
+    
+RUN echo "${LINUX_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 ## Change to the user , defined in environment variables
 USER ${LINUX_USER}
@@ -23,6 +25,6 @@ USER ${LINUX_USER}
 # Expose the desired port
 EXPOSE ${PORT}
 # Start an interactive shell
-CMD ["/bin/bash"]
+CMD ["tail", "-f", "/dev/null"]
 ## Build the containor using : docker build -t linuxserver .
 ## Run the containor using : docker run -d -p local_port_num:4000 --name img_name linuxserver

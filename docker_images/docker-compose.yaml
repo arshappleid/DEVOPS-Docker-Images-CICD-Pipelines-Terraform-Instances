@@ -10,7 +10,7 @@ services:
         depends_on:     ## make these containors first
             - backend
         environment:
-            ENVIRONMENT_VAR_1=value
+            - ENVIRONMENT_VAR_1=value
         networks:
             subnet1:
                 ipv4_address: 192.168.92.1 # assign this ip address to the docker containor
@@ -24,7 +24,7 @@ services:
         depends_on:
             - database
         environment:
-            ENVIRONMENT_VAR_1=value
+            - ENVIRONMENT_VAR_1=value
         networks:
             subnet1:
                 ipv4_address: 192.168.92.2
@@ -39,7 +39,7 @@ services:
             - ./localhost/directory:/path/inside/containor
         restart: always
         environment:
-            ENVIRONMENT_VAR_1=value
+            - ENVIRONMENT_VAR_1=value
         networks:
             subnet1:
                 ipv4_address: 192.168.92.3 # other containors inside the network will be able to reach the database at this ipv4_address
