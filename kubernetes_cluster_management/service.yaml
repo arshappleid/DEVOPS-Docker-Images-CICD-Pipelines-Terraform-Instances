@@ -1,0 +1,18 @@
+# run the file using ``` kubectl apply -f=service.yaml ```
+apiVersion: core/v1  # related to what functionality we are deploying
+kind: service     # Deployment , job , service
+metadata:
+    name: frontend  # kind name , or deployment-name , service-name 
+spec:
+    selector:
+        app: front_end
+        app: back_end # if we want to expose the backend , delete otherwise
+    ports:
+        - protocol : 'TCP'   # Look up types of connections
+          port: 80           # Port inside the pod
+          targetport: 8080   # Local port
+        - protocol : 'TCP'
+          port: 80           # Port inside the pod
+          targetport: 4080   # Local port
+    type: LoadBalancer       # Look up all the possible values.
+        

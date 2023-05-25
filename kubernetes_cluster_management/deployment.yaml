@@ -1,0 +1,23 @@
+# run the file using ``` kubectl apply -f=deployment.yaml ```
+apiVersion: apps/v1  # version of kubernetes 
+kind: Deployment     # Deployment , job , service
+metadata:
+    name: nginx-deployment  # kind name , or deployment-name , service-name 
+    labels:                 # 
+        app: nginx
+spec:
+    replicas: 3             # How many pods we require , control how many pods we need. 
+    selector:               # Selector controls which other resource will be controlled by this deployment
+        matchLabels:        # How to How many containors inside this pod
+            app: front_end
+            app: back_end
+    template:               # Configure the deployment , configure the pod and all the containors inside the pod here
+        metadata:
+            labels:
+                app: deployment-name
+        spec:
+            containors:
+                - name: front_end
+                  image: dockerhub_image
+                - name: back_end
+                  image: dockerhub_image
