@@ -29,3 +29,32 @@ The above pods will be running in the Worker node server . And Since we are runn
 
 
 ## Using AWS Load Balancer to configure the IP address and DNS Settings.
+
+
+## Deleting kubernetes pods :
+- ``` kubectl delete -f=deployment.yaml``` will delete the kubernetes cluster.
+  
+## Grouping deployment and services.
+- Assign the labels : then group subtage , and map all the deployment and services related to one product ,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

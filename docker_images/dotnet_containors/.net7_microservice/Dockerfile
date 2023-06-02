@@ -19,6 +19,6 @@ WORKDIR /app
 COPY --from=build-env /app/out .
 # Generate ssl certificate for the docker image , and import into 
 # Expose port 5000
-EXPOSE 6000
+EXPOSE 5001
 
 ENTRYPOINT ["dotnet", "app_name.dll"]

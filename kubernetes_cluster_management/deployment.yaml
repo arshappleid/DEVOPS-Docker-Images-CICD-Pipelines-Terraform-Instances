@@ -18,6 +18,7 @@ spec:
         spec:
             containors:
                 - name: front_end
-                  image: dockerhub_image
+                  image: dockerhub_image:latest
+                  imagePullPolicy:Always # Always pull the image , even if no changes everytime this file is run
                 - name: back_end
                   image: dockerhub_image
